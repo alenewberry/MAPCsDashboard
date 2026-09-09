@@ -13,10 +13,9 @@ public sealed class EstadoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult Get() => Ok(new
     {
-        servicio = "API ERP Catedral Software",
+        servicio = "API MAP Catedral Software",
         estado = "disponible",
         version = "1.0",
         fechaUtc = DateTimeOffset.UtcNow
     });
 }
-

@@ -5,17 +5,15 @@
 En producción, no guardar secretos en `appsettings.json`. Configurar estas variables en el servidor:
 
 - `ApiKey__Key`: clave larga y aleatoria para el consumidor.
-- `ConnectionStrings__Erp`: conexión SQL Server de un usuario con permisos exclusivamente de lectura sobre `api.vw_ChequesTerceros`.
 - `ASPNETCORE_ENVIRONMENT=Production`.
 
 La URL pública prevista es `https://api-test.catedralsoft.com.ar`. El certificado TLS, el DNS y el proxy IIS deben configurarse en infraestructura.
 
-## Integración con la base ERP del cliente
+## Endpoints de negocio
 
-1. Ejecutar `database/01-contract-view.sql` en la base del cliente.
-2. Validar que los códigos de estado coincidan con esa versión del ERP.
-3. Conceder al usuario SQL de la API únicamente `SELECT` sobre las dos vistas del esquema `api`.
-4. Probar cada estado conocido con casos reales antes de publicar.
+Antes de implementar cada endpoint se debe acordar su ruta, filtros, contrato de
+respuesta, fuente de datos y permisos. Las conexiones necesarias se agregarán
+cuando esos contratos estén definidos.
 
 ## Compilación
 

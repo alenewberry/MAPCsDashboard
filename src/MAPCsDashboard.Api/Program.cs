@@ -1,11 +1,17 @@
 using System.Reflection;
 using MAPCsDashboard.Api.Authentication;
-using MAPCsDashboard.Api.Data;
 using MAPCsDashboard.Api.Middleware;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration
+        .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables();
+}
 
 builder.Services
     .AddOptions<ApiKeyOptions>()
@@ -21,17 +27,15 @@ builder.Services.AddAuthentication(ApiKeyAuthenticationDefaults.Scheme)
         ApiKeyAuthenticationDefaults.Scheme,
         _ => { });
 builder.Services.AddAuthorization();
-builder.Services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
-builder.Services.AddScoped<IChequeRepository, SqlChequeRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Catedral Software - API ERP",
+        Title = "Catedral Software - API MAP",
         Version = "v1",
-        Description = "API de consulta (solo lectura) para información del ERP."
+        Description = "API REST de solo lectura para las integraciones de MAP."
     });
     options.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
     {
@@ -58,9 +62,9 @@ app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API ERP v1");
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API MAP v1");
     options.RoutePrefix = "documentacion";
-    options.DocumentTitle = "Documentación API ERP";
+    options.DocumentTitle = "Documentación API MAP";
     options.DisplayRequestDuration();
 });
 app.UseAuthentication();

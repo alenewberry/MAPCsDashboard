@@ -4,8 +4,8 @@ param(
 
 $tests = @(
     @{ Name = "Estado público"; Method = "GET"; Path = "/api/v1/estado"; Expected = 200 },
-    @{ Name = "Cheques sin clave"; Method = "GET"; Path = "/api/v1/cheques"; Expected = 401 },
     @{ Name = "Escritura bloqueada"; Method = "POST"; Path = "/api/v1/estado"; Expected = 405 },
+    @{ Name = "Ruta inexistente"; Method = "GET"; Path = "/api/v1/no-existe"; Expected = 404 },
     @{ Name = "OpenAPI"; Method = "GET"; Path = "/swagger/v1/swagger.json"; Expected = 200 },
     @{ Name = "Documentación"; Method = "GET"; Path = "/documentacion/index.html"; Expected = 200 }
 )
